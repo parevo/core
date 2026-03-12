@@ -109,3 +109,11 @@ go run ./examples/notification
 ```
 
 Unified notification: email, SMS, WebSocket via `notification.Sender` interface. Uses `notification/memory` for dev/test.
+
+## blob
+
+```bash
+go run ./examples/blob
+```
+
+Object storage: Put, Get, List, Delete. Uses `blob/memory` for dev/test. Swap to `blob/s3` or `blob/r2` for production.

@@ -54,7 +54,7 @@ func (p *SMSProvider) SendSMS(ctx context.Context, payload notification.SMSPaylo
 	if err != nil {
 		return fmt.Errorf("twilio do: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode >= 400 {
 		return fmt.Errorf("twilio api: status %d", resp.StatusCode)

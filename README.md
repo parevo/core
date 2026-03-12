@@ -40,6 +40,10 @@ Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authen
 - `notification/ses`: Amazon SES email provider
 - `notification/twilio`: Twilio SMS provider
 - `notification/nop`: no-op sender and providers when disabled
+- `blob`: object storage interface (Put, Get, Delete, List, PresignGet, PresignPut)
+- `blob/s3`: Amazon S3 provider
+- `blob/r2`: Cloudflare R2 provider (S3-compatible)
+- `blob/memory`: in-memory store for dev/test
 - `config`: config validation helpers
 - `storage`: DB adapter interfaces
 - `storage/memory`: in-memory adapters for quick start
@@ -94,6 +98,7 @@ Reuse auth + tenant semantics across projects without code duplication.
 - `examples/totp-mfa`: TOTP 2FA setup and verify
 - `examples/admin-panel`: Admin UI for tenants, permissions, sessions
 - `examples/notification`: email, SMS, WebSocket via memory sender
+- `examples/blob`: S3/R2 object storage (Put, Get, List, Delete)
 
 See `examples/README.md` for run instructions.
 

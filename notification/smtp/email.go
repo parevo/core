@@ -51,12 +51,12 @@ func (p *EmailProvider) SendEmail(ctx context.Context, payload notification.Emai
 		if err != nil {
 			return fmt.Errorf("smtp tls dial: %w", err)
 		}
-		defer conn.Close()
+		defer func() { _ = conn.Close() }()
 		client, err := smtp.NewClient(conn, p.cfg.Host)
 		if err != nil {
 			return fmt.Errorf("smtp client: %w", err)
 		}
-		defer client.Close()
+		defer func() { _ = client.Close() }()
 		if err := send(client, auth, from, payload, msg); err != nil {
 			return err
 		}
@@ -111,7 +111,7 @@ func send(client *smtp.Client, auth smtp.Auth, from string, payload notification
 	if err != nil {
 		return fmt.Errorf("smtp data: %w", err)
 	}
-	defer w.Close()
+	defer func() { _ = w.Close() }()
 	if _, err := w.Write(msg); err != nil {
 		return fmt.Errorf("smtp write: %w", err)
 	}
