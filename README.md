@@ -33,6 +33,13 @@ Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authen
 - `saml`: SAML 2.0 SSO
 - `ldap`: LDAP/Active Directory auth
 - `webhooks`: event webhooks (user.created, session.revoked, etc.)
+- `notification`: unified sender interface for email, SMS, WebSocket
+- `notification/memory`: in-memory providers for dev/test
+- `notification/smtp`: SMTP email provider
+- `notification/gmail`: Gmail email provider (SMTP wrapper)
+- `notification/ses`: Amazon SES email provider
+- `notification/twilio`: Twilio SMS provider
+- `notification/nop`: no-op sender and providers when disabled
 - `config`: config validation helpers
 - `storage`: DB adapter interfaces
 - `storage/memory`: in-memory adapters for quick start
@@ -86,6 +93,7 @@ Reuse auth + tenant semantics across projects without code duplication.
 - `examples/permission-cache`: cached permission store with invalidation
 - `examples/totp-mfa`: TOTP 2FA setup and verify
 - `examples/admin-panel`: Admin UI for tenants, permissions, sessions
+- `examples/notification`: email, SMS, WebSocket via memory sender
 
 See `examples/README.md` for run instructions.
 

@@ -101,3 +101,11 @@ go run ./examples/admin-panel
 ```
 
 Admin panel at http://localhost:8086/admin. Login required: visit /login, use `admin` / `admin123` (demo). Only users with `admin:*` permission can access. Manage tenants, permissions, sessions.
+
+## notification
+
+```bash
+go run ./examples/notification
+```
+
+Unified notification: email, SMS, WebSocket via `notification.Sender` interface. Uses `notification/memory` for dev/test.
