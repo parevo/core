@@ -34,7 +34,7 @@ func TestCache(t *testing.T) {
 	}
 
 	// Expiry
-	c.Set(ctx, "k2", []byte("v2"), 10*time.Millisecond)
+	_ = c.Set(ctx, "k2", []byte("v2"), 10*time.Millisecond)
 	time.Sleep(20 * time.Millisecond)
 	v, _ = c.Get(ctx, "k2")
 	if v != nil {

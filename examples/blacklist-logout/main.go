@@ -64,7 +64,7 @@ func main() {
 		}
 		claims, err := svc.ParseAndValidate(token)
 		if err != nil {
-			http.Error(w, err.Error(), 401)
+			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 		// Blacklist by jti until token expires

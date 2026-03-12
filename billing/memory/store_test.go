@@ -10,9 +10,9 @@ func TestUsageStore(t *testing.T) {
 	ctx := context.Background()
 	store := NewUsageStore()
 
-	store.Record(ctx, "t1", "api_calls", 100)
-	store.Record(ctx, "t1", "api_calls", 50)
-	store.Record(ctx, "t2", "api_calls", 10)
+	_ = store.Record(ctx, "t1", "api_calls", 100)
+	_ = store.Record(ctx, "t1", "api_calls", 50)
+	_ = store.Record(ctx, "t2", "api_calls", 10)
 
 	from := time.Now().Add(-1 * time.Hour)
 	to := time.Now().Add(1 * time.Hour)

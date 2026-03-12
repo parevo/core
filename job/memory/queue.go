@@ -7,11 +7,6 @@ import (
 	"github.com/parevo/core/job"
 )
 
-type jobItem struct {
-	queue   string
-	payload []byte
-}
-
 // Queue implements job.Queue and job.Runner with in-memory channels.
 type Queue struct {
 	mu     sync.Mutex

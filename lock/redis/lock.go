@@ -30,8 +30,14 @@ func (l *Locker) key(k string) string {
 
 // Lock acquires the lock. Returns true if acquired, false if already held.
 func (l *Locker) Lock(ctx context.Context, key string, ttl time.Duration) (bool, error) {
-	ok, err := l.client.SetNX(ctx, l.key(key), "1", ttl).Result()
-	return ok, err
+	err := l.client.SetArgs(ctx, l.key(key), "1", redis.SetArgs{Mode: "NX", TTL: ttl}).Err()
+	if err == redis.Nil {
+		return false, nil
+	}
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 // Unlock releases the lock.

@@ -24,12 +24,12 @@ func TestLocker(t *testing.T) {
 		t.Error("expected lock not acquired")
 	}
 
-	l.Unlock(ctx, "key1")
+	_ = l.Unlock(ctx, "key1")
 
 	// After unlock, should acquire again
 	ok3, _ := l.Lock(ctx, "key1", 30*time.Second)
 	if !ok3 {
 		t.Error("expected lock acquired after unlock")
 	}
-	l.Unlock(ctx, "key1")
+	_ = l.Unlock(ctx, "key1")
 }
