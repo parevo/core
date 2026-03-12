@@ -46,6 +46,10 @@ b := query.NewSQLBuilder(query.PlaceholderQ)  // MySQL
 // b := query.NewSQLBuilder(query.PlaceholderDollar)  // Postgres
 where, args := b.Where(filters)
 orderBy := b.OrderBy(sortBy)
+
+// With whitelist (user input): use WhereSafe/OrderBySafe
+b = query.NewSQLBuilder(query.PlaceholderQ).WithWhitelist([]string{"status", "name", "created_at"})
+where, args, err := b.WhereSafe(filters)
 // SELECT * FROM users WHERE status = ? AND name LIKE ? ORDER BY created_at DESC
 ```
 

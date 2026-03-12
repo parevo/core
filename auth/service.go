@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/parevo/core/auth/blacklist"
 	"github.com/parevo/core/storage"
 	tenantpkg "github.com/parevo/core/tenant"
 )
@@ -92,6 +93,11 @@ func (s *Service) ParseAndValidate(tokenString string) (*Claims, error) {
 
 	if claims.UserID == "" {
 		return nil, fmt.Errorf("%w: missing sub", ErrInvalidToken)
+	}
+	if claims.ID != "" && s.modules.Blacklist != nil {
+		if err := s.modules.Blacklist.Check(context.Background(), claims.ID); err != nil {
+			return nil, err
+		}
 	}
 	if claims.SessionID != "" && s.modules.SessionStore != nil {
 		revoked, revokeErr := s.modules.SessionStore.IsSessionRevoked(context.Background(), claims.SessionID)
@@ -220,7 +226,7 @@ func HTTPStatusForError(err error) int {
 		return 200
 	case errors.Is(err, ErrForbidden), errors.Is(err, ErrTenantMismatch):
 		return 403
-	case errors.Is(err, ErrUnauthenticated), errors.Is(err, ErrInvalidToken), errors.Is(err, ErrSessionRevoked), errors.Is(err, ErrInvalidRefresh), errors.Is(err, ErrRefreshReuse):
+	case errors.Is(err, ErrUnauthenticated), errors.Is(err, ErrInvalidToken), errors.Is(err, ErrSessionRevoked), errors.Is(err, ErrInvalidRefresh), errors.Is(err, ErrRefreshReuse), errors.Is(err, blacklist.ErrTokenBlacklisted):
 		return 401
 	case errors.Is(err, ErrMissingTenant), errors.Is(err, ErrInvalidConfig):
 		return 400
@@ -260,7 +266,9 @@ func (s *Service) RevokeAllSessionsByUser(ctx context.Context, userID string) er
 
 func (s *Service) issueToken(base Claims, tokenType string, ttl time.Duration) (string, error) {
 	now := time.Now().UTC()
-
+	if base.ID == "" {
+		base.ID = mustTokenID()
+	}
 	claims := Claims{
 		UserID:      base.UserID,
 		TenantID:    base.TenantID,

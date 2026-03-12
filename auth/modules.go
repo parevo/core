@@ -22,12 +22,18 @@ type Tracer interface {
 	StartSpan(ctx context.Context, name string, attrs map[string]string) (context.Context, func())
 }
 
+// BlacklistChecker checks if a token (by jti or hash) is blacklisted. Optional; used for logout.
+type BlacklistChecker interface {
+	Check(ctx context.Context, jtiOrHash string) error
+}
+
 type Modules struct {
 	Tenant         *tenant.Service
 	Permission     *permission.Service
 	TenantOverride tenant.OverridePolicy
 	SessionStore   storage.SessionStore
 	RefreshStore   storage.RefreshTokenStore
+	Blacklist      BlacklistChecker
 	AuditLogger    AuditLogger
 	Metrics        MetricsRecorder
 	Tracer         Tracer

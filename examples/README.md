@@ -134,3 +134,11 @@ MONGODB_URI="mongodb://localhost:27017" go run ./examples/mongodb-storage
 ```
 
 MongoDB storage adapter: same stores as MySQL. Collections auto-created. Runs on :8084.
+
+## blacklist-logout
+
+```bash
+go run ./examples/blacklist-logout
+```
+
+Logout with JWT blacklist. Login -> /me works -> logout -> /me returns 401. Runs on :8085.

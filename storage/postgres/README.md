@@ -29,6 +29,10 @@ permissionStore := postgres.NewPermissionStore(db)
 // Social (OAuth login)
 socialStore := postgres.NewSocialAccountStore(db)
 
+// Admin (optional)
+userStore := postgres.NewUserStore(db)
+// SessionStore implements SessionListStore; use sessionStore for ListSessionsByUser
+
 // Wire up
 tenantSvc := tenant.NewService(tenantStore)
 permSvc := permission.NewService(permissionStore)

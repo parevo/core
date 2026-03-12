@@ -41,4 +41,23 @@ func (s *PostgresSessionStore) RevokeAllSessionsByUser(ctx context.Context, user
 	return err
 }
 
+// ListSessionsByUser returns session IDs for the user (for admin UI).
+func (s *PostgresSessionStore) ListSessionsByUser(ctx context.Context, userID string) ([]string, error) {
+	rows, err := s.db.QueryContext(ctx, `SELECT session_id FROM parevo_sessions WHERE user_id = $1`, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = rows.Close() }()
+	var out []string
+	for rows.Next() {
+		var sid string
+		if err := rows.Scan(&sid); err != nil {
+			return nil, err
+		}
+		out = append(out, sid)
+	}
+	return out, rows.Err()
+}
+
 var _ storage.UserSessionStore = (*PostgresSessionStore)(nil)
+var _ storage.SessionListStore = (*PostgresSessionStore)(nil)

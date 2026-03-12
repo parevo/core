@@ -55,4 +55,25 @@ func (s *SessionStore) RevokeAllSessionsByUser(ctx context.Context, userID strin
 	return err
 }
 
+// ListSessionsByUser returns session IDs for the user (for admin UI).
+func (s *SessionStore) ListSessionsByUser(ctx context.Context, userID string) ([]string, error) {
+	cur, err := s.coll.Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = cur.Close(ctx) }()
+	var out []string
+	for cur.Next(ctx) {
+		var doc struct {
+			SessionID string `bson:"session_id"`
+		}
+		if err := cur.Decode(&doc); err != nil {
+			return nil, err
+		}
+		out = append(out, doc.SessionID)
+	}
+	return out, cur.Err()
+}
+
 var _ storage.UserSessionStore = (*SessionStore)(nil)
+var _ storage.SessionListStore = (*SessionStore)(nil)

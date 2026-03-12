@@ -27,6 +27,8 @@ tenantStore := mysqlstorage.NewTenantStore(db)
 tenantLifecycleStore := mysqlstorage.NewTenantLifecycleStore(db)
 permissionStore := mysqlstorage.NewPermissionStore(db)
 socialStore := mysqlstorage.NewSocialAccountStore(db)
+userStore := mysqlstorage.NewUserStore(db)
+// SessionStore implements SessionListStore
 ```
 
 ## Dependencies
