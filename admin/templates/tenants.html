@@ -1,0 +1,52 @@
+{{define "content"}}
+<div class="bg-slate-800 rounded-lg p-4 mb-4">
+  <h2 class="text-sm font-medium text-slate-400 mb-3">Tenants</h2>
+  {{if .Tenants}}
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="text-left text-slate-400 text-sm">
+          <th class="py-2 px-3">ID</th>
+          <th class="py-2 px-3">Status</th>
+          <th class="py-2 px-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .Tenants}}
+        <tr class="border-t border-slate-700">
+          <td class="py-2 px-3">{{.ID}}</td>
+          <td class="py-2 px-3"><span class="px-2 py-0.5 rounded text-xs {{if eq .Status "active"}}bg-emerald-500/20 text-emerald-400{{else}}bg-amber-500/20 text-amber-400{{end}}">{{.Status}}</span></td>
+          <td class="py-2 px-3 flex gap-2">
+            {{if eq .Status "active"}}
+            <form action="{{$.BasePath}}/api/tenants/{{.ID}}?action=suspend" method="POST" class="inline" onsubmit="return confirm('Suspend?')">
+              <button type="submit" class="px-2 py-1 text-xs rounded bg-slate-600 hover:bg-slate-500">Suspend</button>
+            </form>
+            {{end}}
+            {{if eq .Status "suspended"}}
+            <form action="{{$.BasePath}}/api/tenants/{{.ID}}?action=resume" method="POST" class="inline">
+              <button type="submit" class="px-2 py-1 text-xs rounded bg-slate-600 hover:bg-slate-500">Resume</button>
+            </form>
+            {{end}}
+            <form action="{{$.BasePath}}/api/tenants/{{.ID}}?action=delete" method="POST" class="inline" onsubmit="return confirm('Delete?')">
+              <button type="submit" class="px-2 py-1 text-xs rounded bg-red-600 hover:bg-red-500">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <p class="text-slate-500 py-8 text-center">No tenants yet.</p>
+  {{end}}
+</div>
+<div class="bg-slate-800 rounded-lg p-4">
+  <h2 class="text-sm font-medium text-slate-400 mb-3">Create tenant</h2>
+  <form action="{{.BasePath}}/api/tenants" method="POST" class="flex flex-wrap gap-2">
+    <input name="tenant_id" placeholder="Tenant ID" required class="px-3 py-2 rounded bg-slate-700 border border-slate-600 text-slate-100 placeholder-slate-500 min-w-[140px]">
+    <input name="name" placeholder="Name" class="px-3 py-2 rounded bg-slate-700 border border-slate-600 text-slate-100 placeholder-slate-500 min-w-[140px]">
+    <input name="owner_id" placeholder="Owner ID" class="px-3 py-2 rounded bg-slate-700 border border-slate-600 text-slate-100 placeholder-slate-500 min-w-[140px]">
+    <button type="submit" class="px-4 py-2 rounded bg-sky-500 hover:bg-sky-400 text-slate-900 font-medium">Create</button>
+  </form>
+</div>
+{{end}}

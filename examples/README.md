@@ -93,3 +93,11 @@ go run ./examples/totp-mfa
 ```
 
 TOTP 2FA setup and verification with pquerna/otp.
+
+## admin-panel
+
+```bash
+go run ./examples/admin-panel
+```
+
+Admin panel at http://localhost:8086/admin. Login required: visit /login, use `admin` / `admin123` (demo). Only users with `admin:*` permission can access. Manage tenants, permissions, sessions.

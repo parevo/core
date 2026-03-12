@@ -66,6 +66,19 @@ func (s *TenantLifecycleStore) Status(_ context.Context, tenantID string) (stora
 	return s.Tenants[tenantID], nil
 }
 
+func (s *TenantLifecycleStore) ListTenants(_ context.Context) ([]storage.TenantInfo, error) {
+	if s == nil || s.Tenants == nil {
+		return nil, nil
+	}
+	var out []storage.TenantInfo
+	for id, status := range s.Tenants {
+		if status != storage.TenantStatusDeleted {
+			out = append(out, storage.TenantInfo{ID: id, Status: status})
+		}
+	}
+	return out, nil
+}
+
 type PermissionStore struct {
 	// Key format: subjectID|tenantID|permission
 	Grants map[string]bool
@@ -110,6 +123,36 @@ func matchPermission(granted, requested string) bool {
 		return true
 	}
 	return false
+}
+
+func (s *PermissionStore) Grant(_ context.Context, subjectID, tenantID, permission string) error {
+	if s.Grants == nil {
+		s.Grants = map[string]bool{}
+	}
+	s.Grants[subjectID+"|"+tenantID+"|"+permission] = true
+	return nil
+}
+
+func (s *PermissionStore) Revoke(_ context.Context, subjectID, tenantID, permission string) error {
+	if s.Grants == nil {
+		return nil
+	}
+	delete(s.Grants, subjectID+"|"+tenantID+"|"+permission)
+	return nil
+}
+
+func (s *PermissionStore) ListGrants(_ context.Context, subjectID, tenantID string) ([]string, error) {
+	if s == nil || s.Grants == nil {
+		return nil, nil
+	}
+	prefix := subjectID + "|" + tenantID + "|"
+	var out []string
+	for k, v := range s.Grants {
+		if v && len(k) > len(prefix) && k[:len(prefix)] == prefix {
+			out = append(out, k[len(prefix):])
+		}
+	}
+	return out, nil
 }
 
 type SessionStore struct {
@@ -159,6 +202,17 @@ func (s *SessionStore) RevokeAllSessionsByUser(_ context.Context, userID string)
 		s.Revoked[sessionID] = true
 	}
 	return nil
+}
+
+func (s *SessionStore) ListSessionsByUser(_ context.Context, userID string) ([]string, error) {
+	if s == nil || s.UserSessions == nil {
+		return nil, nil
+	}
+	var out []string
+	for sid := range s.UserSessions[userID] {
+		out = append(out, sid)
+	}
+	return out, nil
 }
 
 type RefreshStore struct {
@@ -233,6 +287,21 @@ func (s *RefreshStore) RevokeAllByUser(ctx context.Context, userID string) error
 		}
 	}
 	return nil
+}
+
+type UserStore struct {
+	Users map[string]storage.UserInfo // userID -> UserInfo
+}
+
+func (s *UserStore) ListUsers(_ context.Context) ([]storage.UserInfo, error) {
+	if s == nil || s.Users == nil {
+		return nil, nil
+	}
+	out := make([]storage.UserInfo, 0, len(s.Users))
+	for _, u := range s.Users {
+		out = append(out, u)
+	}
+	return out, nil
 }
 
 type SocialAccountStore struct {

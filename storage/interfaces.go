@@ -43,6 +43,41 @@ type TenantLifecycleStore interface {
 	Status(ctx context.Context, tenantID string) (TenantStatus, error)
 }
 
+type TenantInfo struct {
+	ID     string
+	Status TenantStatus
+}
+
+// TenantListStore lists tenants for admin UI. Optional.
+type TenantListStore interface {
+	ListTenants(ctx context.Context) ([]TenantInfo, error)
+}
+
+// PermissionGrantStore grants/revokes permissions for admin UI. Optional.
+type PermissionGrantStore interface {
+	Grant(ctx context.Context, subjectID, tenantID, permission string) error
+	Revoke(ctx context.Context, subjectID, tenantID, permission string) error
+	ListGrants(ctx context.Context, subjectID, tenantID string) ([]string, error)
+}
+
+// SessionListStore lists sessions for admin UI. Optional.
+type SessionListStore interface {
+	ListSessionsByUser(ctx context.Context, userID string) ([]string, error)
+}
+
+// UserInfo for admin listing.
+type UserInfo struct {
+	ID        string
+	Email     string
+	Name      string
+	CreatedAt time.Time
+}
+
+// UserListStore lists registered users for admin UI. Optional.
+type UserListStore interface {
+	ListUsers(ctx context.Context) ([]UserInfo, error)
+}
+
 // PermissionStore is implemented by project-specific DB adapters.
 type PermissionStore interface {
 	HasPermission(ctx context.Context, subjectID, tenantID, permission string, roles []string) (bool, error)

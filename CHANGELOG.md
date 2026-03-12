@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TenantRateLimitMiddleware` (nethttp, chi adapters)
 - Permission cache (`permission.CachedPermissionStore`): TTL cache, `InvalidateSubject`, `InvalidateSubjectTenant`, `InvalidateAll`
 - TOTP implementation (`auth/mfa.PquernaVerifier`): pquerna/otp for verification and secret generation
+- Admin panel (`admin`): optional UI + API for tenant, permission, session management; mount at any URL
+- Storage extensions: `TenantListStore`, `PermissionGrantStore`, `SessionListStore` for admin
 - golangci-lint in CI pipeline
 - Prometheus metrics, OpenTelemetry tracing, Postgres adapter (previous release)
 

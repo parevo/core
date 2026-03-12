@@ -1,0 +1,37 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}} – Parevo Core Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <div class="flex">
+    <aside class="w-56 bg-slate-800 p-4 min-h-screen">
+      <nav class="flex flex-col gap-1">
+        <a href="{{.BasePath}}/" class="px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-sky-400 transition {{if eq .Section "dashboard"}}bg-slate-700 text-sky-400{{end}}" {{if eq .Section "dashboard"}}{{else}}hx-get="{{.BasePath}}/" hx-target="#main" hx-push-url="true" hx-swap="innerHTML"{{end}}>Dashboard</a>
+        <a href="{{.BasePath}}/users" class="px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-sky-400 transition {{if eq .Section "users"}}bg-slate-700 text-sky-400{{end}}" {{if eq .Section "users"}}{{else}}hx-get="{{.BasePath}}/users" hx-target="#main" hx-push-url="true" hx-swap="innerHTML"{{end}}>Users</a>
+        <a href="{{.BasePath}}/tenants" class="px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-sky-400 transition {{if eq .Section "tenants"}}bg-slate-700 text-sky-400{{end}}" {{if eq .Section "tenants"}}{{else}}hx-get="{{.BasePath}}/tenants" hx-target="#main" hx-push-url="true" hx-swap="innerHTML"{{end}}>Tenants</a>
+        <a href="{{.BasePath}}/permissions" class="px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-sky-400 transition {{if eq .Section "permissions"}}bg-slate-700 text-sky-400{{end}}" {{if eq .Section "permissions"}}{{else}}hx-get="{{.BasePath}}/permissions" hx-target="#main" hx-push-url="true" hx-swap="innerHTML"{{end}}>Permissions</a>
+        <a href="{{.BasePath}}/sessions" class="px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-sky-400 transition {{if eq .Section "sessions"}}bg-slate-700 text-sky-400{{end}}" {{if eq .Section "sessions"}}{{else}}hx-get="{{.BasePath}}/sessions" hx-target="#main" hx-push-url="true" hx-swap="innerHTML"{{end}}>Sessions</a>
+      </nav>
+      <div class="mt-6 text-xs text-slate-500">{{.UserID}} · {{.TenantID}}</div>
+      <a href="{{.LogoutPath}}" class="mt-2 block text-sm text-slate-500 hover:text-slate-300" onclick="event.preventDefault();fetch('{{.LogoutPath}}',{method:'POST',credentials:'same-origin'}).then(()=>location.href='/login')">Logout</a>
+    </aside>
+    <main id="main" class="flex-1 p-6 max-w-4xl">
+      {{template "mainFragment" .}}
+    </main>
+  </div>
+</body>
+</html>
+{{end}}
+{{define "mainFragment"}}
+<h1 class="text-xl font-semibold mb-4">{{.Title}}</h1>
+{{template "content" .}}
+{{end}}

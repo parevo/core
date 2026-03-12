@@ -28,6 +28,7 @@ Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authen
 - `observability/logging`: structured logging (dev/prod)
 - `observability/metrics`: Prometheus metrics
 - `observability/tracing`: OpenTelemetry-compatible tracing
+- `admin`: optional admin panel (tenants, permissions, sessions) mountable at any URL
 
 ## Supported Frameworks
 
@@ -69,6 +70,7 @@ Reuse auth + tenant semantics across projects without code duplication.
 - `examples/tenant-ratelimit`: tenant-based rate limiting
 - `examples/permission-cache`: cached permission store with invalidation
 - `examples/totp-mfa`: TOTP 2FA setup and verify
+- `examples/admin-panel`: Admin UI for tenants, permissions, sessions
 
 See `examples/README.md` for run instructions.
 
