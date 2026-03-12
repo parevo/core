@@ -1,112 +1,162 @@
-# Parevo Core
+<p align="center">
+  <img src="website/static/img/logo.svg" alt="Parevo" width="48" height="48" />
+</p>
 
-Framework-agnostic Go library for auth, tenant, and permission management.
+<h1 align="center">Parevo Core</h1>
+
+<p align="center">
+  <strong>Framework-agnostic Go library for auth, tenant, and permission management.</strong>
+</p>
+
+<p align="center">
+  <a href="https://pkg.go.dev/github.com/parevo/core"><img src="https://pkg.go.dev/badge/github.com/parevo/core.svg" alt="Go Reference" /></a>
+  <a href="https://github.com/parevo/core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" /></a>
+  <a href="https://go.dev/"><img src="https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go" alt="Go" /></a>
+</p>
+
+---
+
+## Features
+
+- **Auth** — JWT, OAuth2, SAML, LDAP, API keys, WebAuthn, magic link
+- **Multi-tenant** — Tenant context, lifecycle, feature flags
+- **Permission** — RBAC, ABAC, cached checks
+- **Storage-agnostic** — MySQL, Postgres, MongoDB, Redis, memory
+- **Framework-agnostic** — net/http, chi, gin, echo, fiber, GraphQL
+
+## Quick Start
 
 ```bash
 go get github.com/parevo/core
 ```
 
-Import: `github.com/parevo/core/auth`, `github.com/parevo/core/tenant`, etc.
+```go
+package main
 
-Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authentication, tenant context, and permission checks as separate composable services.
+import (
+    "net/http"
+    "github.com/parevo/core/auth"
+    "github.com/parevo/core/auth/adapters"
+    "github.com/parevo/core/auth/adapters/nethttp"
+)
+
+func main() {
+    svc, _ := auth.NewService(auth.Config{
+        Issuer:    "parevo",
+        Audience:  "parevo-api",
+        SecretKey: []byte("your-secret"),
+    })
+
+    mux := http.NewServeMux()
+    mux.Handle("/secure", nethttp.AuthMiddleware(svc, adapters.Options{})(yourHandler))
+    http.ListenAndServe(":8080", mux)
+}
+```
 
 ## Modules
 
-- `auth`: JWT service, guards, middleware adapters
-- `auth/mfa`: 2FA/MFA TOTP (pquerna/otp), recovery codes
-- `auth/apikey`: API key validation
-- `auth/webauthn`: WebAuthn/Passkeys (build with `-tags webauthn`)
-- `auth/magiclink`: magic link / email OTP
-- `auth/blacklist`: JWT blacklist for immediate revoke
-- `auth/ipfilter`: IP allowlist/blocklist
-- `auth/oauth2provider`: OAuth2 authorization server
-- `auth/scopes`: OAuth2 scope checks in claims
-- `auth/tenantsql`: tenant filter helpers
-- `tenant`: tenant selection, override policy, lifecycle (create/suspend/delete)
-- `tenant/features`: tenant-level feature flags, plan limits
-- `permission`: permission check service
-- `permission/abac`: ABAC conditions (resource owner, department, environment)
-- `social`: social login callback and account linking
-- `social/providers/google`: Google OIDC
-- `social/providers/github`: GitHub OAuth
-- `consent`: OAuth2 consent management
-- `saml`: SAML 2.0 SSO
-- `ldap`: LDAP/Active Directory auth
-- `webhooks`: event webhooks (user.created, session.revoked, etc.)
-- `notification`: unified sender interface for email, SMS, WebSocket
-- `notification/memory`: in-memory providers for dev/test
-- `notification/smtp`: SMTP email provider
-- `notification/gmail`: Gmail email provider (SMTP wrapper)
-- `notification/ses`: Amazon SES email provider
-- `notification/twilio`: Twilio SMS provider
-- `notification/nop`: no-op sender and providers when disabled
-- `blob`: object storage interface (Put, Get, Delete, List, PresignGet, PresignPut)
-- `blob/s3`: Amazon S3 provider
-- `blob/r2`: Cloudflare R2 provider (S3-compatible)
-- `blob/memory`: in-memory store for dev/test
-- `config`: config validation helpers
-- `storage`: DB adapter interfaces
-- `storage/memory`: in-memory adapters for quick start
-- `storage/postgres`: Postgres adapter (SessionStore, RefreshStore)
-- `storage/redis`: Redis adapter (SessionStore, RefreshStore)
-- `observability/logging`: structured logging (dev/prod)
-- `observability/metrics`: Prometheus metrics
-- `observability/audit`: audit log search and export (JSON, CSV)
-- `observability/tracing`: OpenTelemetry-compatible tracing
-- `admin`: optional admin panel (tenants, permissions, sessions) mountable at any URL
+### Auth & Identity
+
+| Module | Description |
+|--------|-------------|
+| `auth` | JWT service, guards, middleware adapters |
+| `auth/mfa` | TOTP 2FA, recovery codes |
+| `auth/apikey` | API key validation |
+| `auth/webauthn` | WebAuthn/Passkeys (`-tags webauthn`) |
+| `auth/magiclink` | Magic link / email OTP |
+| `auth/blacklist` | JWT blacklist for immediate revoke |
+| `auth/ipfilter` | IP allowlist/blocklist |
+| `auth/oauth2provider` | OAuth2 authorization server |
+| `auth/tenantsql` | Tenant filter helpers for SQL |
+| `social` | Social login (Google, GitHub) |
+| `consent` | OAuth2 consent management |
+| `saml` | SAML 2.0 SSO |
+| `ldap` | LDAP/Active Directory auth |
+
+### Tenant & Permission
+
+| Module | Description |
+|--------|-------------|
+| `tenant` | Tenant selection, override policy, lifecycle |
+| `tenant/features` | Feature flags, plan limits |
+| `permission` | Permission check service |
+| `permission/abac` | ABAC conditions |
+
+### Storage & Data
+
+| Module | Description |
+|--------|-------------|
+| `storage` | DB adapter interfaces |
+| `storage/memory` | In-memory adapters |
+| `storage/postgres` | Postgres adapter |
+| `storage/mysql` | MySQL adapter |
+| `storage/mongodb` | MongoDB adapter |
+| `storage/redis` | Redis adapter (sessions, refresh) |
+| `blob` | Object storage (S3, R2, memory) |
+| `cache` | Generic cache (memory, Redis) |
+| `lock` | Distributed lock (memory, Redis) |
+| `search` | Full-text search (SQL builder) |
+
+### Infrastructure
+
+| Module | Description |
+|--------|-------------|
+| `health` | Health checks (DB, Redis, blob) |
+| `job` | Async job queue (memory) |
+| `billing` | Tenant usage tracking |
+| `notification` | Email, SMS, WebSocket |
+| `webhooks` | Event webhooks |
+
+### Compliance & Utilities
+
+| Module | Description |
+|--------|-------------|
+| `export` | GDPR data export |
+| `validation` | Request/body validation |
+| `geo` | IP geolocation |
+| `config` | Config validation |
+| `observability` | Logging, metrics, tracing, audit |
+| `admin` | Admin panel (tenants, permissions, sessions) |
 
 ## Supported Frameworks
 
-- `net/http`
-- `chi` (on top of net/http)
-- `gin`
-- `echo`
-- `fiber`
-- `graphql` (auth adapter for GraphQL resolvers)
-
-## Goal
-
-Reuse auth + tenant semantics across projects without code duplication.
-
-## Product Readiness
-
-- Config requirements: `Issuer`, `Audience`, `SecretKey`
-- Key rotation: `SigningKeys` + `ActiveKID`
-- Refresh rotation + reuse detection
-- Session revoke + refresh-store integration
-- Logout-all (user session family revoke)
-- Sanitized error responses (no detail leakage)
-- Rate limit middleware (IP and tenant-aware)
-- Brute-force lockout manager
-- Structured audit logging (dev/prod format + redaction)
-- Framework parity tests: net/http, gin, echo, fiber, chi
-- Tenant filtering: `auth/tenantsql` for mandatory `tenant_id`
-- Modular DB adapter model via `storage` interfaces
+| Framework | Auth Adapter |
+|-----------|--------------|
+| net/http | `auth/adapters/nethttp` |
+| chi | `auth/adapters/chi` |
+| gin | `auth/adapters/gin` |
+| echo | `auth/adapters/echo` |
+| fiber | `auth/adapters/fiber` |
+| GraphQL | `auth/adapters/graphql` |
 
 ## Examples
 
-- `examples/nethttp-basic`: minimal net/http setup
-- `examples/gin-modular`: auth + tenant + permission integration
-- `examples/custom-db-adapter`: mapping custom DB schema to storage interfaces
-- `examples/social-login`: social callback + link + token
-- `examples/social-google`: real Google OIDC provider
-- `examples/refresh-rotation`: refresh rotation security flow
-- `examples/logging`: dev/prod log formats
-- `examples/apikey`: API key authentication
-- `examples/tenant-ratelimit`: tenant-based rate limiting
-- `examples/permission-cache`: cached permission store with invalidation
-- `examples/totp-mfa`: TOTP 2FA setup and verify
-- `examples/admin-panel`: Admin UI for tenants, permissions, sessions
-- `examples/notification`: email, SMS, WebSocket via memory sender
-- `examples/blob`: S3/R2 object storage (Put, Get, List, Delete)
+```bash
+go run ./examples/nethttp-basic
+go run ./examples/gin-modular
+go run ./examples/notification
+go run ./examples/blob
+go run ./examples/admin-panel
+```
 
-See `examples/README.md` for run instructions.
+| Example | Description |
+|---------|-------------|
+| `nethttp-basic` | Minimal net/http setup |
+| `gin-modular` | Auth + tenant + permission |
+| `social-login` | Social callback + account linking |
+| `totp-mfa` | TOTP 2FA setup and verify |
+| `permission-cache` | Cached permission store |
+| `tenant-ratelimit` | Tenant-based rate limiting |
+| `blacklist-logout` | JWT blacklist on logout |
+| `mysql-storage` | MySQL adapter (requires `MYSQL_DSN`) |
+| `mongodb-storage` | MongoDB adapter (requires `MONGODB_URI`) |
 
-## Release
+See [examples/README.md](examples/README.md) for full list and run instructions.
 
-- `CHANGELOG.md`: semantic versioning
-- `Makefile`: test, vet, fmt, lint
-- `.github/workflows/ci.yml`: CI pipeline
+## Documentation
+
+- **Docs:** [parevo.github.io/core](https://parevo.github.io/core/)
+- **Local:** `cd website && npm install && npm run start`
 
 ## License
 
@@ -114,16 +164,4 @@ MIT. See [LICENSE](LICENSE).
 
 ## Contributing
 
-Issue-first workflow. See `.github/CONTRIBUTING.md` and open issues for feature requests.
-
-## Documentation
-
-Docs are built with [Docusaurus](https://docusaurus.io/):
-
-```bash
-cd website && npm install && npm run start
-```
-
-## Structure
-
-See `STRUCTURE.md` for folder layout.
+Issue-first workflow. See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md).
