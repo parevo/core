@@ -94,6 +94,6 @@ func (p *Provider) Exchange(ctx context.Context, code, clientID, clientSecret, r
 
 func generateCode() string {
 	b := make([]byte, 32)
-	rand.Read(b)
+	_, _ = rand.Read(b)
 	return hex.EncodeToString(b)
 }

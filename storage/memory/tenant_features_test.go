@@ -11,9 +11,9 @@ func TestTenantFeatureStore(t *testing.T) {
 	store := NewTenantFeatureStore()
 	ctx := context.Background()
 
-	store.SetPlan(ctx, "t1", storage.PlanPro)
-	store.SetFeature(ctx, "t1", "saml", true)
-	store.SetLimit(ctx, "t1", "max_users", 50)
+	_ = store.SetPlan(ctx, "t1", storage.PlanPro)
+	_ = store.SetFeature(ctx, "t1", "saml", true)
+	_ = store.SetLimit(ctx, "t1", "max_users", 50)
 
 	plan, err := store.GetPlan(ctx, "t1")
 	if err != nil {

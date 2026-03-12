@@ -44,7 +44,7 @@ func TestRecoveryService_InvalidCode(t *testing.T) {
 	svc := NewRecoveryService(store, 3)
 	ctx := context.Background()
 
-	svc.Generate(ctx, "u1")
+	_, _ = svc.Generate(ctx, "u1")
 
 	err := svc.Verify(ctx, "u1", "invalid")
 	if err != ErrRecoveryCodeInvalid {

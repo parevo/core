@@ -22,7 +22,7 @@ func main() {
 		if tenantID == "" {
 			tenantID = "_default"
 		}
-		_, _ = w.Write([]byte(fmt.Sprintf("ok tenant=%s\n", tenantID)))
+		_, _ = fmt.Fprintf(w, "ok tenant=%s\n", tenantID)
 	}))
 
 	mux := http.NewServeMux()

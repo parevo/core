@@ -2,8 +2,10 @@ package auth
 
 import "context"
 
+type requestIDKey string
+
 const (
-	requestIDContextKey = "parevo.request_id"
+	requestIDContextKey requestIDKey = "parevo.request_id"
 )
 
 func WithRequestID(ctx context.Context, requestID string) context.Context {

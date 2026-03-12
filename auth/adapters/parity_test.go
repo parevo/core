@@ -182,8 +182,8 @@ func runFiber(t *testing.T, svc *auth.Service, opts adapters.Options) int {
 	if err != nil {
 		t.Fatalf("fiber test request failed: %v", err)
 	}
-	defer resp.Body.Close()
-	io.Copy(io.Discard, resp.Body)
+	defer func() { _ = resp.Body.Close() }()
+	_, _ = io.Copy(io.Discard, resp.Body)
 	return resp.StatusCode
 }
 
@@ -200,7 +200,7 @@ func runFiberWithToken(t *testing.T, svc *auth.Service, opts adapters.Options, t
 	if err != nil {
 		t.Fatalf("fiber test request failed: %v", err)
 	}
-	defer resp.Body.Close()
-	io.Copy(io.Discard, resp.Body)
+	defer func() { _ = resp.Body.Close() }()
+	_, _ = io.Copy(io.Discard, resp.Body)
 	return resp.StatusCode
 }

@@ -36,10 +36,12 @@ func (l Level) String() string {
 	}
 }
 
+type contextKey string
+
 const (
-	RequestIDContextKey = "parevo.request_id"
-	TenantIDContextKey  = "parevo.tenant_id"
-	UserIDContextKey    = "parevo.user_id"
+	RequestIDContextKey contextKey = "parevo.request_id"
+	TenantIDContextKey  contextKey = "parevo.tenant_id"
+	UserIDContextKey    contextKey = "parevo.user_id"
 )
 
 type Config struct {

@@ -12,7 +12,7 @@ func TestMFARecoveryStore(t *testing.T) {
 	ctx := context.Background()
 
 	hashes := []string{"h1", "h2", "h3"}
-	store.SetHashes(ctx, "u1", hashes)
+	_ = store.SetHashes(ctx, "u1", hashes)
 
 	got, err := store.GetHashes(ctx, "u1")
 	if err != nil {
@@ -46,7 +46,7 @@ func TestMFARecoveryStore_RealHash(t *testing.T) {
 	code := "abc123"
 	h := sha256.Sum256([]byte(code))
 	hash := hex.EncodeToString(h[:])
-	store.SetHashes(ctx, "u1", []string{hash})
+	_ = store.SetHashes(ctx, "u1", []string{hash})
 
 	ok, err := store.Consume(ctx, "u1", hash)
 	if err != nil {

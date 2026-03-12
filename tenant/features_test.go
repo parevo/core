@@ -36,9 +36,9 @@ func TestFeatureService_NilStore(t *testing.T) {
 
 func TestFeatureService_WithStore(t *testing.T) {
 	store := memory.NewTenantFeatureStore()
-	store.SetPlan(context.Background(), "t1", storage.PlanPro)
-	store.SetFeature(context.Background(), "t1", "saml", true)
-	store.SetLimit(context.Background(), "t1", "max_users", 100)
+	_ = store.SetPlan(context.Background(), "t1", storage.PlanPro)
+	_ = store.SetFeature(context.Background(), "t1", "saml", true)
+	_ = store.SetLimit(context.Background(), "t1", "max_users", 100)
 
 	svc := NewFeatureService(store)
 	ctx := context.Background()
@@ -80,7 +80,7 @@ func TestFeatureService_WithStore(t *testing.T) {
 
 func TestFeatureService_RequireEnabled_Denied(t *testing.T) {
 	store := memory.NewTenantFeatureStore()
-	store.SetPlan(context.Background(), "t1", storage.PlanFree)
+	_ = store.SetPlan(context.Background(), "t1", storage.PlanFree)
 
 	svc := NewFeatureService(store)
 	ctx := context.Background()

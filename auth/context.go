@@ -5,17 +5,19 @@ import "context"
 type contextKey string
 
 const (
-	claimsContextKey contextKey = "parevo.auth.claims"
-	tenantContextKey contextKey = "parevo.auth.tenant_id"
-	userContextKey   contextKey = "parevo.auth.user_id"
+	claimsContextKey  contextKey = "parevo.auth.claims"
+	tenantContextKey   contextKey = "parevo.auth.tenant_id"
+	userContextKey     contextKey = "parevo.auth.user_id"
+	legacyTenantKey    contextKey = "parevo.tenant_id"
+	legacyUserKey      contextKey = "parevo.user_id"
 )
 
 func WithClaims(ctx context.Context, claims *Claims) context.Context {
 	ctx = context.WithValue(ctx, claimsContextKey, claims)
 	ctx = context.WithValue(ctx, tenantContextKey, claims.TenantID)
 	ctx = context.WithValue(ctx, userContextKey, claims.UserID)
-	ctx = context.WithValue(ctx, "parevo.tenant_id", claims.TenantID)
-	ctx = context.WithValue(ctx, "parevo.user_id", claims.UserID)
+	ctx = context.WithValue(ctx, legacyTenantKey, claims.TenantID)
+	ctx = context.WithValue(ctx, legacyUserKey, claims.UserID)
 	return ctx
 }
 

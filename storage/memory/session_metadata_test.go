@@ -9,8 +9,8 @@ func TestSessionMetadataStore(t *testing.T) {
 	store := NewSessionMetadataStore()
 	ctx := context.Background()
 
-	store.SetMetadata(ctx, "s1", "u1", "192.168.1.1", "Mozilla/5.0")
-	store.BindSessionToUser(ctx, "u1", "s1")
+	_ = store.SetMetadata(ctx, "s1", "u1", "192.168.1.1", "Mozilla/5.0")
+	_ = store.BindSessionToUser(ctx, "u1", "s1")
 
 	meta, err := store.ListWithMetadata(ctx, "u1")
 	if err != nil {

@@ -100,9 +100,9 @@ func (s *InMemoryEventStore) ExportCSV(ctx context.Context, q Query, w io.Writer
 		return err
 	}
 	cw := csv.NewWriter(w)
-	cw.Write([]string{"id", "timestamp", "event", "user_id", "tenant_id", "ip"})
+	_ = cw.Write([]string{"id", "timestamp", "event", "user_id", "tenant_id", "ip"})
 	for _, e := range events {
-		cw.Write([]string{e.ID, e.Timestamp.Format(time.RFC3339), e.Event, e.UserID, e.TenantID, e.IP})
+		_ = cw.Write([]string{e.ID, e.Timestamp.Format(time.RFC3339), e.Event, e.UserID, e.TenantID, e.IP})
 	}
 	cw.Flush()
 	return cw.Error()

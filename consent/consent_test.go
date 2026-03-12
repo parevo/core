@@ -74,7 +74,7 @@ func TestConsent_Revoke(t *testing.T) {
 	svc := NewService(store, nil)
 	ctx := context.Background()
 
-	svc.Grant(ctx, "u1", "client1", []string{"read"})
+	_ = svc.Grant(ctx, "u1", "client1", []string{"read"})
 	if err := svc.Revoke(ctx, "u1", "client1"); err != nil {
 		t.Fatalf("Revoke failed: %v", err)
 	}

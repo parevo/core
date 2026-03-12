@@ -71,7 +71,7 @@ func (p Provider) ExchangeCode(ctx context.Context, code string, _ string) (stor
 	if err != nil {
 		return storage.SocialIdentity{}, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if resp.StatusCode >= 300 {
 		return storage.SocialIdentity{}, fmt.Errorf("userinfo request failed: %d", resp.StatusCode)
 	}

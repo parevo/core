@@ -27,7 +27,7 @@ func main() {
 
 	protected := nethttpadapter.AuthMiddleware(svc, adapters.Options{})(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		claims, _ := auth.ClaimsFromContext(r.Context())
-		_, _ = w.Write([]byte(fmt.Sprintf("hello user=%s tenant=%s", claims.UserID, claims.TenantID)))
+		_, _ = fmt.Fprintf(w, "hello user=%s tenant=%s", claims.UserID, claims.TenantID)
 	}))
 
 	mux.Handle("/secure", protected)

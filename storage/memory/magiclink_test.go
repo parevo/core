@@ -10,7 +10,7 @@ func TestMagicLinkStore(t *testing.T) {
 	store := NewMagicLinkStore()
 	ctx := context.Background()
 
-	store.Create(ctx, "user@x.com", "token123", time.Now().Add(time.Hour))
+	_ = store.Create(ctx, "user@x.com", "token123", time.Now().Add(time.Hour))
 
 	email, err := store.Consume(ctx, "token123")
 	if err != nil {
