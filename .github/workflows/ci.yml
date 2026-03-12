@@ -15,7 +15,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version: '1.24'
 
       - name: Run tests
         run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
@@ -48,7 +48,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version: '1.24'
 
       - name: Run benchmarks
         run: go test -bench=. -benchmem -run=^$ ./auth/... ./permission/... 2>&1 | tee benchmark.txt
