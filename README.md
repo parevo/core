@@ -13,20 +13,34 @@ Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authen
 ## Modules
 
 - `auth`: JWT service, guards, middleware adapters
-- `auth/mfa`: 2FA/MFA TOTP (pquerna/otp)
+- `auth/mfa`: 2FA/MFA TOTP (pquerna/otp), recovery codes
 - `auth/apikey`: API key validation
+- `auth/webauthn`: WebAuthn/Passkeys (build with `-tags webauthn`)
+- `auth/magiclink`: magic link / email OTP
+- `auth/blacklist`: JWT blacklist for immediate revoke
+- `auth/ipfilter`: IP allowlist/blocklist
+- `auth/oauth2provider`: OAuth2 authorization server
+- `auth/scopes`: OAuth2 scope checks in claims
 - `auth/tenantsql`: tenant filter helpers
 - `tenant`: tenant selection, override policy, lifecycle (create/suspend/delete)
+- `tenant/features`: tenant-level feature flags, plan limits
 - `permission`: permission check service
+- `permission/abac`: ABAC conditions (resource owner, department, environment)
 - `social`: social login callback and account linking
 - `social/providers/google`: Google OIDC
 - `social/providers/github`: GitHub OAuth
+- `consent`: OAuth2 consent management
+- `saml`: SAML 2.0 SSO
+- `ldap`: LDAP/Active Directory auth
+- `webhooks`: event webhooks (user.created, session.revoked, etc.)
+- `config`: config validation helpers
 - `storage`: DB adapter interfaces
 - `storage/memory`: in-memory adapters for quick start
 - `storage/postgres`: Postgres adapter (SessionStore, RefreshStore)
 - `storage/redis`: Redis adapter (SessionStore, RefreshStore)
 - `observability/logging`: structured logging (dev/prod)
 - `observability/metrics`: Prometheus metrics
+- `observability/audit`: audit log search and export (JSON, CSV)
 - `observability/tracing`: OpenTelemetry-compatible tracing
 - `admin`: optional admin panel (tenants, permissions, sessions) mountable at any URL
 
@@ -37,6 +51,7 @@ Core modules: `auth`, `tenant`, `permission`, and `storage` — JWT-based authen
 - `gin`
 - `echo`
 - `fiber`
+- `graphql` (auth adapter for GraphQL resolvers)
 
 ## Goal
 

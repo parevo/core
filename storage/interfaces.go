@@ -93,6 +93,24 @@ type SessionStore interface {
 	IsSessionRevoked(ctx context.Context, sessionID string) (bool, error)
 }
 
+// SessionMetadata holds IP, user-agent, last activity for a session.
+type SessionMetadata struct {
+	SessionID    string
+	UserID       string
+	IP           string
+	UserAgent    string
+	LastActivity time.Time
+	CreatedAt    time.Time
+}
+
+// SessionMetadataStore lists sessions with metadata for admin UI.
+type SessionMetadataStore interface {
+	SessionStore
+	SetMetadata(ctx context.Context, sessionID, userID, ip, userAgent string) error
+	UpdateActivity(ctx context.Context, sessionID string) error
+	ListWithMetadata(ctx context.Context, userID string) ([]SessionMetadata, error)
+}
+
 type UserSessionStore interface {
 	SessionStore
 	BindSessionToUser(ctx context.Context, userID, sessionID string) error
