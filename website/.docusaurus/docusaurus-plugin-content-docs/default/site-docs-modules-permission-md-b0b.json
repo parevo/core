@@ -1,0 +1,24 @@
+{
+  "id": "modules/permission",
+  "title": "Permission Module",
+  "description": "Permission check service with wildcard support.",
+  "source": "@site/docs/modules/permission.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/permission",
+  "permalink": "/core/modules/permission",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/permission.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Tenant Module",
+    "permalink": "/core/modules/tenant"
+  },
+  "next": {
+    "title": "Storage Module",
+    "permalink": "/core/modules/storage"
+  }
+}

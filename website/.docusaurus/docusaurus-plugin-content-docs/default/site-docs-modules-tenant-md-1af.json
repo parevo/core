@@ -1,0 +1,24 @@
+{
+  "id": "modules/tenant",
+  "title": "Tenant Module",
+  "description": "Tenant selection, override policy, lifecycle (create/suspend/delete).",
+  "source": "@site/docs/modules/tenant.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/tenant",
+  "permalink": "/core/modules/tenant",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/tenant.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Auth Module",
+    "permalink": "/core/modules/auth"
+  },
+  "next": {
+    "title": "Permission Module",
+    "permalink": "/core/modules/permission"
+  }
+}

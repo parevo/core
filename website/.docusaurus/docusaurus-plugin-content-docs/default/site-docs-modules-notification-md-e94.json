@@ -1,0 +1,24 @@
+{
+  "id": "modules/notification",
+  "title": "Notification Module",
+  "description": "Unified sender for email, SMS, WebSocket.",
+  "source": "@site/docs/modules/notification.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/notification",
+  "permalink": "/core/modules/notification",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/notification.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Storage Module",
+    "permalink": "/core/modules/storage"
+  },
+  "next": {
+    "title": "Blob Module",
+    "permalink": "/core/modules/blob"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/core/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/core/",
+          "mainDocId": "index",
+          "docs": [
+            {
+              "id": "examples/overview",
+              "path": "/core/examples/overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "index",
+              "path": "/core/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/auth",
+              "path": "/core/modules/auth",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/blob",
+              "path": "/core/modules/blob",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/notification",
+              "path": "/core/modules/notification",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/permission",
+              "path": "/core/modules/permission",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/storage",
+              "path": "/core/modules/storage",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "modules/tenant",
+              "path": "/core/modules/tenant",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/core/",
+                "label": "index"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

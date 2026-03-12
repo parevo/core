@@ -1,0 +1,24 @@
+{
+  "id": "modules/auth",
+  "title": "Auth Module",
+  "description": "JWT-based authentication, guards, middleware adapters.",
+  "source": "@site/docs/modules/auth.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/auth",
+  "permalink": "/core/modules/auth",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/auth.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Parevo Core",
+    "permalink": "/core/"
+  },
+  "next": {
+    "title": "Tenant Module",
+    "permalink": "/core/modules/tenant"
+  }
+}

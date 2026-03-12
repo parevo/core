@@ -1,0 +1,24 @@
+{
+  "id": "modules/blob",
+  "title": "Blob Module",
+  "description": "Object storage (S3, R2) interface.",
+  "source": "@site/docs/modules/blob.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/blob",
+  "permalink": "/core/modules/blob",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/blob.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Notification Module",
+    "permalink": "/core/modules/notification"
+  },
+  "next": {
+    "title": "Examples",
+    "permalink": "/core/examples/overview"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "index",
+  "title": "Parevo Core",
+  "description": "Framework-agnostic Go library for auth, tenant, and permission management.",
+  "source": "@site/docs/index.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/core/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/index.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Auth Module",
+    "permalink": "/core/modules/auth"
+  }
+}

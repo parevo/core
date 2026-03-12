@@ -1,0 +1,47 @@
+{
+  "/core/-ef7": {
+    "__comp": "5e95c892",
+    "__context": {
+      "plugin": "aba21aa0"
+    }
+  },
+  "/core/-0b7": {
+    "__comp": "a7bd4aaa",
+    "__props": "5ec1a818"
+  },
+  "/core/-95d": {
+    "__comp": "a94703ab"
+  },
+  "/core/examples/overview-387": {
+    "__comp": "17896441",
+    "content": "74bf304f"
+  },
+  "/core/modules/auth-598": {
+    "__comp": "17896441",
+    "content": "2b28abc2"
+  },
+  "/core/modules/blob-73f": {
+    "__comp": "17896441",
+    "content": "8f99c4c0"
+  },
+  "/core/modules/notification-2f1": {
+    "__comp": "17896441",
+    "content": "e948b695"
+  },
+  "/core/modules/permission-365": {
+    "__comp": "17896441",
+    "content": "b0b2365e"
+  },
+  "/core/modules/storage-ec2": {
+    "__comp": "17896441",
+    "content": "7c63c540"
+  },
+  "/core/modules/tenant-edf": {
+    "__comp": "17896441",
+    "content": "1af70dcd"
+  },
+  "/core/-e91": {
+    "__comp": "17896441",
+    "content": "c377a04b"
+  }
+}

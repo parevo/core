@@ -1,0 +1,20 @@
+{
+  "id": "examples/overview",
+  "title": "Examples",
+  "description": "Run examples from the project root:",
+  "source": "@site/docs/examples/overview.md",
+  "sourceDirName": "examples",
+  "slug": "/examples/overview",
+  "permalink": "/core/examples/overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/examples/overview.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Blob Module",
+    "permalink": "/core/modules/blob"
+  }
+}

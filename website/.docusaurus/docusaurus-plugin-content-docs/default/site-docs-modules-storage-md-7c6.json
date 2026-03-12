@@ -1,0 +1,24 @@
+{
+  "id": "modules/storage",
+  "title": "Storage Module",
+  "description": "DB adapter interfaces for auth, tenant, permission.",
+  "source": "@site/docs/modules/storage.md",
+  "sourceDirName": "modules",
+  "slug": "/modules/storage",
+  "permalink": "/core/modules/storage",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/parevo/core/tree/main/website/docs/modules/storage.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Permission Module",
+    "permalink": "/core/modules/permission"
+  },
+  "next": {
+    "title": "Notification Module",
+    "permalink": "/core/modules/notification"
+  }
+}

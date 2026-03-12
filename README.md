@@ -116,6 +116,14 @@ MIT. See [LICENSE](LICENSE).
 
 Issue-first workflow. See `.github/CONTRIBUTING.md` and open issues for feature requests.
 
+## Documentation
+
+Docs are built with [Docusaurus](https://docusaurus.io/):
+
+```bash
+cd website && npm install && npm run start
+```
+
 ## Structure
 
 See `STRUCTURE.md` for folder layout.
