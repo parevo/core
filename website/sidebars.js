@@ -9,6 +9,7 @@ const sidebars = {
         'modules/tenant',
         'modules/permission',
         'modules/storage',
+        'modules/query',
         'modules/notification',
         'modules/blob',
       ],

@@ -90,8 +90,8 @@ func (s *Service) ParseAndValidate(tokenString string) (*Claims, error) {
 		return nil, ErrInvalidToken
 	}
 
-	if claims.UserID == "" || claims.TenantID == "" {
-		return nil, fmt.Errorf("%w: missing sub or tenant_id", ErrInvalidToken)
+	if claims.UserID == "" {
+		return nil, fmt.Errorf("%w: missing sub", ErrInvalidToken)
 	}
 	if claims.SessionID != "" && s.modules.SessionStore != nil {
 		revoked, revokeErr := s.modules.SessionStore.IsSessionRevoked(context.Background(), claims.SessionID)
@@ -133,7 +133,7 @@ func (s *Service) AuthenticateContext(ctx context.Context, bearerToken string, r
 			s.audit(ctx, AuditAuthFailed, map[string]string{"reason": "invalid_apikey"})
 			return ctx, nil, ErrUnauthenticated
 		}
-		if userID == "" || tenantID == "" {
+		if userID == "" {
 			s.audit(ctx, AuditAuthFailed, map[string]string{"reason": "invalid_apikey"})
 			return ctx, nil, ErrUnauthenticated
 		}
@@ -163,10 +163,6 @@ func (s *Service) AuthenticateContext(ctx context.Context, bearerToken string, r
 		}
 		return ctx, nil, err
 	}
-	if tenantID == "" {
-		return ctx, nil, ErrMissingTenant
-	}
-
 	cloned := *claims
 	cloned.TenantID = tenantID
 	s.audit(ctx, AuditAuthSuccess, map[string]string{"user_id": cloned.UserID, "tenant_id": cloned.TenantID})
@@ -304,7 +300,7 @@ type TokenPair struct {
 }
 
 func (s *Service) IssueTokenPair(ctx context.Context, base Claims) (TokenPair, error) {
-	if base.UserID == "" || base.TenantID == "" {
+	if base.UserID == "" {
 		return TokenPair{}, ErrInvalidConfig
 	}
 	if base.SessionID == "" {

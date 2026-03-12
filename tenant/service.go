@@ -45,6 +45,9 @@ func (s *Service) Resolve(ctx context.Context, subject storage.Subject, defaultT
 		return requestedTenantID, nil
 	}
 
+	if defaultTenantID == "" && requestedTenantID == "" {
+		return "", nil // tenant-less mode
+	}
 	if defaultTenantID == "" {
 		return "", ErrNoTenant
 	}
