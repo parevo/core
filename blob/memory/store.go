@@ -87,4 +87,17 @@ func (s *Store) List(ctx context.Context, bucket, prefix string) ([]blob.ObjectI
 	return out, nil
 }
 
+// PresignGet returns a placeholder URL for memory store (for interface compatibility).
+// In tests, use blob.Store directly; presigned URLs require S3/R2.
+func (s *Store) PresignGet(_ context.Context, bucket, k string, _ time.Duration) (string, error) {
+	return "memory://" + bucket + "/" + k + "?presign=get", nil
+}
+
+// PresignPut returns a placeholder URL for memory store (for interface compatibility).
+// In tests, use blob.Store directly; presigned URLs require S3/R2.
+func (s *Store) PresignPut(_ context.Context, bucket, k, _ string, _ time.Duration) (string, error) {
+	return "memory://" + bucket + "/" + k + "?presign=put", nil
+}
+
 var _ blob.Store = (*Store)(nil)
+var _ blob.PresignedStore = (*Store)(nil)

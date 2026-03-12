@@ -5,7 +5,7 @@ JWT-based authentication, guards, middleware adapters.
 ## Submodules
 
 - `auth/mfa` — TOTP 2FA, recovery codes
-- `auth/apikey` — API key validation
+- `auth/apikey` — API key validation (`auth/apikey/memory` for in-memory store)
 - `auth/webauthn` — WebAuthn/Passkeys
 - `auth/magiclink` — magic link / email OTP
 - `auth/blacklist` — JWT blacklist

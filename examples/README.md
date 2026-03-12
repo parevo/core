@@ -117,3 +117,20 @@ go run ./examples/blob
 ```
 
 Object storage: Put, Get, List, Delete. Uses `blob/memory` for dev/test. Swap to `blob/s3` or `blob/r2` for production.
+
+## mysql-storage
+
+```bash
+# Apply schema first: mysql -u root -p parevo < storage/mysql/schema.sql
+MYSQL_DSN="user:pass@tcp(localhost:3306)/parevo?parseTime=true" go run ./examples/mysql-storage
+```
+
+MySQL storage adapter: TenantStore, PermissionStore, SessionStore, RefreshStore, SocialAccountStore. Runs on :8083.
+
+## mongodb-storage
+
+```bash
+MONGODB_URI="mongodb://localhost:27017" go run ./examples/mongodb-storage
+```
+
+MongoDB storage adapter: same stores as MySQL. Collections auto-created. Runs on :8084.

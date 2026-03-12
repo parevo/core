@@ -3,46 +3,18 @@
 package main
 
 import (
-	"context"
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"net/http"
-	"sync"
 
 	"github.com/parevo/core/auth"
 	"github.com/parevo/core/auth/adapters"
 	"github.com/parevo/core/auth/apikey"
+	apikeymemory "github.com/parevo/core/auth/apikey/memory"
 	nethttpadapter "github.com/parevo/core/auth/adapters/nethttp"
 )
 
-type memAPIKeyStore struct {
-	mu   sync.RWMutex
-	keys map[string]struct{ userID, tenantID string }
-}
-
-func (s *memAPIKeyStore) Validate(_ context.Context, keyHash, _ string) (userID, tenantID string, err error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	if e, ok := s.keys[keyHash]; ok {
-		return e.userID, e.tenantID, nil
-	}
-	return "", "", apikey.ErrKeyNotFound
-}
-
-func (s *memAPIKeyStore) Add(rawKey, userID, tenantID string) {
-	hash := sha256.Sum256([]byte(rawKey))
-	keyHash := hex.EncodeToString(hash[:])
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.keys == nil {
-		s.keys = make(map[string]struct{ userID, tenantID string })
-	}
-	s.keys[keyHash] = struct{ userID, tenantID string }{userID, tenantID}
-}
-
 func main() {
-	apiKeyStore := &memAPIKeyStore{}
+	apiKeyStore := apikeymemory.NewStore()
 	key, err := apikey.GenerateKey("pk_")
 	if err != nil {
 		panic(err)

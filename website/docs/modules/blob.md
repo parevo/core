@@ -22,4 +22,4 @@ rc, _ := store.Get(ctx, "bucket", "key")
 
 ## Presigned URLs
 
-S3 and R2 support `PresignGet` and `PresignPut` for direct client access.
+S3 and R2 support `PresignGet` and `PresignPut` for direct client access. Memory store implements the interface with placeholder URLs (for interface compatibility in tests).
