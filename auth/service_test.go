@@ -168,6 +168,43 @@ func TestRotateRefreshTokenAndDetectReuse(t *testing.T) {
 	}
 }
 
+func newBenchmarkService() *Service {
+	svc, _ := NewService(Config{
+		Issuer:    "parevo",
+		Audience:  "parevo-api",
+		SecretKey: []byte("super-secret-key"),
+	})
+	return svc
+}
+
+func BenchmarkIssueAccessToken(b *testing.B) {
+	svc := newBenchmarkService()
+	claims := Claims{UserID: "u1", TenantID: "t1", Roles: []string{"admin"}, Permissions: []string{"orders:read"}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = svc.IssueAccessToken(claims)
+	}
+}
+
+func BenchmarkParseAndValidate(b *testing.B) {
+	svc := newBenchmarkService()
+	token, _ := svc.IssueAccessToken(Claims{UserID: "u1", TenantID: "t1", Roles: []string{"admin"}})
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = svc.ParseAndValidate(token)
+	}
+}
+
+func BenchmarkIssueAndParseRoundTrip(b *testing.B) {
+	svc := newBenchmarkService()
+	claims := Claims{UserID: "u1", TenantID: "t1", Roles: []string{"admin"}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		token, _ := svc.IssueAccessToken(claims)
+		_, _ = svc.ParseAndValidate(token)
+	}
+}
+
 func TestRevokeAllSessionsByUser(t *testing.T) {
 	sessionStore := &memory.SessionStore{}
 	refreshStore := &memory.RefreshStore{}
